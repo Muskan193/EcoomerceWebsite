@@ -9,12 +9,9 @@ public class ProductPage {
 
 
 	    public void view() {
-	        String jdbcUrl = "jdbc:mysql://localhost:3306/miniproject";
-	        String dbUser = "root";
-	        String dbPassword = "Magicworld@1";
-
+	  
 	        try {
-	            Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
+	            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/miniproject", "root", "Magicworld@1");
 
 
 	            String sortingColumn = "id";
