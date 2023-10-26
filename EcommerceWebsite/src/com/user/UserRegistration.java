@@ -3,71 +3,71 @@ package com.user;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-
 public class UserRegistration {
-  public static void main(String[] args) throws SQLException {
-	        
-	            // Establish a database connection
-	        	
-	        Connection   connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/miniproject", "root", "Magicworld@1");
+        Connection con=null;
+        PreparedStatement pstmt=null;
 
-	            // Create a prepared statement for inserting data
-	            String insertQuery = "INSERT INTO registration (firstname, lastname, username, password, city,email, mob) VALUES (?, ?, ?, ?, ?, ?, ?)";        
-	            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+        public void registration() throws SQLException {
+                try {
+                        ConnectionTest connection = new ConnectionTest();
+                        con = connection.getconnection();
 
-	            // Read user input
-	            Scanner scanner = new Scanner(System.in);
-	            System.out.print("First Name: ");
-	            String firstName = scanner.next();
-	            System.out.print("Last Name: ");
-	            String lastName = scanner.next();
-	            System.out.print("Username: ");
-	            String username = scanner.next();
-	            System.out.print("Password: ");
-	            String password = scanner.next();
+                        pstmt = con.prepareStatement("INSERT INTO registration (firstname, lastname, username, password, city,email, mob) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-	            System.out.print("City: ");
-	            String city = scanner.next();
-	            System.out.print("Email: ");
-	            String email = scanner.next();
-	            System.out.print("Mob: ");
-	            String mob = scanner.next();
+                        Scanner scanner = new Scanner(System.in);
+                        System.out.print("First Name: ");
+                        String firstName = scanner.next();
+                        System.out.print("Last Name: ");
+                        String lastName = scanner.next();
+                        System.out.print("Username: ");
+                        String username = scanner.next();
+                        System.out.print("Password: ");
+                        String password = scanner.next();
 
-	            // Set values in the prepared statement
-	            try {
-	            preparedStatement.setString(1, firstName);
-	            preparedStatement.setString(2, lastName);
-	            preparedStatement.setString(3, username);
-	            preparedStatement.setString(4, password);
-	            preparedStatement.setString(5, city);
-	            
-	            preparedStatement.setString(6, email);
-	            preparedStatement.setString(7, mob);
-	        
-	            }catch(Exception e)
-	            {
-	            	System.out.println("email ios already registered");
-	            }
-	            // Execute the query to insert the data
-	            int rowsAffected = preparedStatement.executeUpdate();
+                        System.out.print("City: ");
+                        String city = scanner.next();
+                        System.out.print("Email: ");
+                        String email = scanner.next();
+                        System.out.print("Mob: ");
+                        String mob = scanner.next();
 
-	            if (rowsAffected > 0) {
-	                System.out.println("User registered successfully!");
-	            } else {
-	                System.out.println("Registration failed.");
-	            }
+                        // Set values in the prepared statement
 
-	            // Close resources
-	            preparedStatement.close();
-	            connection.close();
-	        } 
-	    
-	}
+                        pstmt.setString(1, firstName);
+                        pstmt.setString(2, lastName);
+                        pstmt.setString(3, username);
+                        pstmt.setString(4, password);
+                        pstmt.setString(5, city);
+
+                        pstmt.setString(6, email);
+                        pstmt.setString(7, mob);
+
+                         pstmt.executeUpdate();
+                        System.out.println("Record is inserted" );
+
+
+                } catch (Exception e) {
+                        e.printStackTrace();
+                } finally {
+                        con.close();
+                        pstmt.close();
+                }
+        }
+
+                public static void main(String[] args) throws SQLException  {
+
+                        UserRegistration user=new UserRegistration();
+                        user.registration();
+
+                }
+
+        }
+
+
 
 
 
